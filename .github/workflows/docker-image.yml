@@ -24,15 +24,4 @@ jobs:
     - name: Docker Registry Push
       run: docker push alexgui/alexsamarkin.com-server
 
-  push:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Docker Registry Login
-        env:
-          DOCKER_LOGIN: ${{ secrets.DOCKER_REGISTRY_LOGIN }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-        run: docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-
-      - name: Docker Registry Push
-        run: docker push alexgui/alexsamarkin.com-server
 
