@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Post {
+  title: String!
+  excerpt: String!
+  slug: String!
+  thumb: String!
+  content: String
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Nav {
+  title: String!
+  link: String!
+}
+
+type ContentText {
+  aboutText: String!
+  backendText: String!
+  frontendText: String!
+}
+
+type Job {
+  title: String!
+  description: String!
+  fromYear: Int!
+  toYear: Int
+}
+
+type Course {
+  title: String!
+  description: String!
+  fromYear: Int!
+  toYear: Int!
+}
+
+type CV {
+  url: String!
+}
+
+type Query {
+  post(locale: String!, slug: String!): Post!
+  posts(locale: String!): [Post!]!
+  navs(locale: String!): [Nav!]!
+  texts(locale: String!): ContentText!
+  jobs(locale: String!): [Job!]!
+  courses(locale: String!): [Course!]!
+  cv: CV!
+}
