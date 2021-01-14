@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
 
@@ -15,4 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag alexgui/alexsamarkin.com-server:$(date +%s)
+      run: docker build . --file Dockerfile --tag alexgui/alexsamarkin.com-server
+
+    - name: Docker Registry Login
+      env:
+        DOCKER_LOGIN: ${{ secrets.DOCKER_REGISTRY_LOGIN }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      run: docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+
+    - name: Docker Registry Push
+      run: docker push alexgui/alexsamarkin.com-server
+
