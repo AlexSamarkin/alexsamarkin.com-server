@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
 
@@ -24,4 +26,21 @@ jobs:
     - name: Docker Registry Push
       run: docker push alexgui/alexsamarkin.com-server
 
+    - name: Running Docker on remote host
+      uses: appleboy/ssh-action@master
+      env:
+        IMAGE: ${{ secrets.DOCKER_IMAGE }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        GRAPH_CMS_TOKEN: ${{ secrets.GRAPH_CMS_TOKEN }}
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          docker container stop $(docker container ls -q --filter name=appserver
+          docker rm $(docker ps -a -q)
+          docker pull $IMAGE
+          docker run docker run -it -d -p 3000:3000 --name appserver --env TELEGRAM_TOKEN=$TELEGRAM_TOKEN --env TELEGRAM_CHAT_ID=$$TELEGRAM_CHAT_ID --env GRAPH_CMS_TOKEN=$GRAPH_CMS_TOKEN alexgui/alexsamarkin.com-server
 
