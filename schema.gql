@@ -54,3 +54,7 @@ type Query {
   courses(locale: String!): [Course!]!
   cv: CV!
 }
+
+type Mutation {
+  sendMessage(message: String!, email: String!, name: String!): Boolean!
+}
