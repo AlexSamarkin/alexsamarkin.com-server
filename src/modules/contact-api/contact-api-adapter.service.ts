@@ -11,13 +11,17 @@ export class ContactApiAdapterService implements SendMessagePort {
     async send(message: Message) {
         const bot = new TelegramBot(this.configService.get('telegram.token'));
         try {
-            return await bot.sendMessage(this.configService.get('telegram.chatId'), JSON.stringify({
+            const result = await bot.sendMessage(this.configService.get('telegram.chatId'), JSON.stringify({
                 name: message.name,
                 email: message.email,
                 message: message.message
             }));
+
+            return !!result.message_id;
+
+
         } catch (e) {
-            return e.message;
+            return false;
         }
     }
 }
