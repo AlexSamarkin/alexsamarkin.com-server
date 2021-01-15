@@ -1,6 +1,7 @@
 export default () => ({
     port: parseInt(process.env.PORT, 10) || 3000,
     cors: process.env.NODE_ENV === 'production',
+    origin: 'https://alexsamarkin.com',
     mail: {
         smtp: "smtp.yandex.ru",
         smtpPort: 465,

@@ -10,7 +10,9 @@ async function bootstrap() {
   const cors = configService.get('cors');
   app.setGlobalPrefix('api');
   if (cors) {
-    app.enableCors();
+    app.enableCors({
+      origin: configService.get('origin')
+    });
   }
 
   app.use(helmet())
