@@ -1,7 +1,7 @@
 export default
 `
 {
-   courses(orderBy: id_ASC) {
+   courses(orderBy: fromYear_DESC) {
         title
         fromYear
         toYear
